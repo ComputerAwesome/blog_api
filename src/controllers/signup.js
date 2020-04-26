@@ -2,7 +2,6 @@ import { deleteImageIfError } from "../functions/fs";
 export default function ControllerFactory(useCase) {
   return function Controller({ body, file }) {
     return new Promise((resolve, reject) => {
-      console.log(file);
       useCase({ ...body, profilePic: file.filename })
         .then(resolve)
         .catch((err) => {

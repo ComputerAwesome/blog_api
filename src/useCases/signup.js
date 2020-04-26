@@ -15,7 +15,7 @@ export default function UseCaseFactory({ insert, findOne }) {
 
         if (exists.data) return reject({ msg: "user already exists!", status: 400 });
 
-        const dbProcess = await insert(model, entityData.data);
+        const dbProcess = await insert(entityData.data);
 
         if (dbProcess.hasDatabaseError) reject(exists);
 

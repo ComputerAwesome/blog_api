@@ -16,7 +16,7 @@ function createResponse(data, err) {
 
 // Exporting IIFE Database factory
 export default (function () {
-  function insert(data = {}) {
+  function insert(data) {
     return new Promise((resolve, reject) => {
       new userModel(data)
         .save()
