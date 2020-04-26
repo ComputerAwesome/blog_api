@@ -8,7 +8,7 @@ function adaptPublicRequest(controller) {
   // Decorate express object in this function
   return function (req, res, next) {
     const generatedHttp = generateHttpObject(req, res, next);
-    console.log(req.body);
+    // console.log(req.body);
     ExpressObject(generatedHttp)(controller);
   };
 }

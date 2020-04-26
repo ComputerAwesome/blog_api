@@ -7,6 +7,7 @@ export default function (req, res, next) {
       headers: req.headers,
       ip: req.ip,
       host: req.hostname,
+      file: req.file,
     },
     res: {
       send: function (msg) {

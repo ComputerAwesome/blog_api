@@ -1,6 +1,6 @@
 import { userEntity } from "../entities";
 
-export default function UseCaseFactory(model, { insert, findOne }) {
+export default function UseCaseFactory({ insert, findOne }) {
   return function UseCase(data) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -8,9 +8,10 @@ export default function UseCaseFactory(model, { insert, findOne }) {
 
         if (entityData.validationError) return reject(entityData);
 
-        const exists = await findOne(model, { email: entityData.data.email });
+        const exists = await findOne({ email: entityData.data.email });
 
-        if (exists.hasDatabaseError) return reject(exists);
+        if (exists.hasDatabaseError)
+          return reject({ msg: "error adding user, please try again later!" });
 
         if (exists.data) return reject({ msg: "user already exists!", status: 400 });
 
@@ -25,7 +26,7 @@ export default function UseCaseFactory(model, { insert, findOne }) {
         resolve({
           status: 201,
           msg: "signed up successfully!",
-          data: dbProcess.data._doc
+          data: dbProcess.data._doc,
         });
       } catch (err) {
         reject(err.msg ? { msg: err.msg, status: 500 } : { msg: "server error", status: 500 });
