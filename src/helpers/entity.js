@@ -5,12 +5,3 @@ export function entityObject({ msg, validationError, data }) {
     validationError,
   };
 }
-
-export function returnedEntityObject({ status = 500, validationError = true, msg, data = null }) {
-  return {
-    status,
-    validationError,
-    msg,
-    data,
-  };
-}

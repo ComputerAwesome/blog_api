@@ -1,24 +1,23 @@
-export default function EntityFactory(validation, hash, createEntityObject) {
+export default function EntityFactory(validation, hash, createEntityObject, appendValidationError) {
   return function Entity({ email, password }) {
     return new Promise((resolve, reject) => {
       try {
-        if (!email || validation.isEmpty(email))
-          reject(createEntityObject({ msg: "email is required!", validationError: true }));
+        const { pushError, getAllErrors } = appendValidationError();
+        if (!email || validation.isEmpty(email)) pushError("email is required!");
 
         if (!password || validation.isEmpty(password) || password.length < 8)
-          reject(
-            createEntityObject({
-              msg: "password is required! and password should be at least 8 characters",
-              validationError: true
-            })
-          );
+          pushError("password is required! and password should be at least 8 characters");
+
+        let errors = getAllErrors();
+
+        if (errors.validationError) reject({ validationError: true, errors: errors.entityErrors });
 
         const userData = Object.freeze({
           email,
-          password: hash(password)
+          password: hash(password),
         });
 
-        resolve(createEntityObject({ validationError: false, status: 200, data: userData }));
+        resolve({ data: userData, validationError: false, status: 200 });
       } catch (err) {
         reject(err);
       }
