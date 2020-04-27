@@ -4,10 +4,9 @@ export default function ControllerFactory(useCase) {
     return new Promise((resolve, reject) => {
       try {
         const createdBy = params.userId;
-        // console.log(createdBy);
         useCase({ ...body, postImage: file.filename, createdBy })
           .then(resolve)
-          .catch(err => {
+          .catch((err) => {
             deleteImageIfError(file.filename);
             reject(err);
           });

@@ -1,5 +1,5 @@
 export function createServerListener(PORT) {
-  console.log(`Open Node server at post ${PORT} use localhost if you are in local environment`);
+  console.log(`Node server port is ${PORT}`);
 }
 
 export function logger(app) {

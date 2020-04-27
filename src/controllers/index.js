@@ -4,7 +4,13 @@ import addPostControllerFactory from "./add-post";
 import getPostsControllerFactory from "./get-posts";
 import getOnePostControllerFactory from "./get-post";
 
-import { signupUseCase, loginUseCase, addPostUseCase, getPostsUseCase, getOnePostUseCase } from "../useCases";
+import {
+  signupUseCase,
+  loginUseCase,
+  addPostUseCase,
+  getPostsUseCase,
+  getOnePostUseCase,
+} from "../useCases";
 import { createCredentials } from "../auth";
 
 export const signup = signupControllerFactory(signupUseCase); // controller
