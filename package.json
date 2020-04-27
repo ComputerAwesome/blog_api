@@ -4,6 +4,7 @@
   "description": "this is a blog post api for reviews",
   "main": "index.js",
   "scripts": {
+    "static": "mkdir ./src/static",
     "start": "npm run build && cd build && node index.js",
     "clean": "rm -rf build",
     "build": "npm run clean && babel src -d build",

@@ -13,7 +13,7 @@ export default function UseCaseFactory({ insert, findOne }) {
         if (exists.hasDatabaseError)
           return reject({ msg: "error adding user, please try again later!" });
 
-        if (exists.data) return reject({ msg: "user already exists!", status: 400 });
+        if (exists.data) return resolve({ msg: "user already exists!", status: 200 });
 
         const dbProcess = await insert(entityData.data);
 
@@ -29,7 +29,13 @@ export default function UseCaseFactory({ insert, findOne }) {
           data: dbProcess.data._doc,
         });
       } catch (err) {
-        reject(err.msg ? { msg: err.msg, status: 500 } : { msg: "server error", status: 500 });
+        delete err.validationError;
+
+        reject(
+          err.errors
+            ? { errors: err.errors, status: 500 }
+            : { msg: "internal server error", status: 500 }
+        );
       }
     });
   };
