@@ -11,8 +11,13 @@ export default function UseCaseFactory({ findOne }) {
         if (!exists.data) reject({ msg: "no user found with this email!", status: 404 });
         if (exists.data.password !== entityData.data.password)
           reject({ msg: "incorrect password", status: 401 });
+
         delete exists.data._doc.password;
+        delete exists.data._doc.__v;
         delete exists.data._doc.profilePic;
+        delete exists.data._doc.phone;
+        delete exists.data._doc.email;
+
         resolve({
           status: 201,
           msg: "signed up successfully!",
@@ -22,7 +27,9 @@ export default function UseCaseFactory({ findOne }) {
         delete err.validationError;
 
         reject(
-          err.errors ? { errors: err.errors, status: 500 } : { msg: "server error", status: 500 }
+          err.errors
+            ? { errors: err.errors, status: 500 }
+            : { msg: "internal server error", status: 500 }
         );
       }
     });

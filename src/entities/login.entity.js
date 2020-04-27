@@ -1,4 +1,4 @@
-export default function EntityFactory(validation, hash, createEntityObject, appendValidationError) {
+export default function EntityFactory(validation, hash, appendValidationError) {
   return function Entity({ email, password }) {
     return new Promise((resolve, reject) => {
       try {
