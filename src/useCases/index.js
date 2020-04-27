@@ -3,10 +3,10 @@ import loginUseCaseFactory from "./login";
 import addPostUseCaseFactory from "./add-post";
 import getPostsUseCaseFactory from "./get-posts";
 import getOnePostUseCaseFactory from "./get-post";
-import databaseAdapters, { UserModel, PostModel, UserRepo } from "../database";
+import { BlogRepo, UserRepo } from "../database";
 
 export const signupUseCase = signupUseCaseFactory(UserRepo);
 export const loginUseCase = loginUseCaseFactory(UserRepo);
-export const addPostUseCase = addPostUseCaseFactory(PostModel, databaseAdapters);
-export const getPostsUseCase = getPostsUseCaseFactory(PostModel, databaseAdapters);
-export const getOnePostUseCase = getOnePostUseCaseFactory(PostModel, databaseAdapters);
+export const addPostUseCase = addPostUseCaseFactory(BlogRepo);
+export const getPostsUseCase = getPostsUseCaseFactory(BlogRepo);
+export const getOnePostUseCase = getOnePostUseCaseFactory(BlogRepo);

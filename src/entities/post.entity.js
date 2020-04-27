@@ -1,4 +1,4 @@
-export default function EntityFactory(validation, hash, createEntityObject) {
+export default function EntityFactory(validation, hash, appendValidationError) {
   return function Entity({
     createdIn = Date.now(),
     updatedIn = Date.now(),
@@ -6,41 +6,22 @@ export default function EntityFactory(validation, hash, createEntityObject) {
     postImage,
     post,
     createdBy,
-    published = true
+    published = true,
   }) {
     return new Promise((resolve, reject) => {
       try {
-        if (!postTitle || validation.isEmpty(postTitle))
-          reject(
-            createEntityObject({
-              msg: "post title is required!",
-              validationError: true
-            })
-          );
+        const { pushError, getAllErrors } = appendValidationError();
+        if (!postTitle || validation.isEmpty(postTitle)) pushError("post title is required!");
 
-        if (!postImage || validation.isEmpty(postImage))
-          reject(
-            createEntityObject({
-              msg: "post image is required!",
-              validationError: true
-            })
-          );
+        if (!postImage || validation.isEmpty(postImage)) pushError("post image is required!");
 
-        if (!post || validation.isEmpty(post))
-          reject(
-            createEntityObject({
-              msg: "post is required!",
-              validationError: true
-            })
-          );
+        if (!post || validation.isEmpty(post)) pushError("post is required!");
 
-        if (!createdBy || validation.isEmpty(createdBy))
-          reject(
-            createEntityObject({
-              msg: "user id is required!",
-              validationError: true
-            })
-          );
+        if (!createdBy || validation.isEmpty(createdBy)) pushError("user id is required!");
+
+        let errors = getAllErrors();
+
+        if (errors.validationError) reject({ validationError: true, errors: errors.entityErrors });
 
         const data = Object.freeze({
           createdBy,
@@ -50,18 +31,10 @@ export default function EntityFactory(validation, hash, createEntityObject) {
           postImage,
           post,
           published,
-          postHash: hash(postTitle)
+          postHash: hash(postTitle),
         });
 
-        console.log(data);
-
-        resolve(
-          createEntityObject({
-            validationError: false,
-            status: 200,
-            data
-          })
-        );
+        resolve({ data, status: 201, validationError: false });
       } catch (err) {
         reject(err);
       }

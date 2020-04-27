@@ -6,7 +6,7 @@ export default function databaseAdapters(dbms, dbUrl, options) {
   function createResponseObject(data, hasDatabaseError) {
     return {
       data,
-      hasDatabaseError
+      hasDatabaseError,
     };
   }
 
@@ -40,6 +40,6 @@ export default function databaseAdapters(dbms, dbUrl, options) {
   return Object.freeze({
     insert,
     findOne,
-    find
+    find,
   });
 }

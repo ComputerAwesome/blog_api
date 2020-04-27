@@ -1,11 +1,10 @@
 import databaseAdapters from "./database-adapters";
 import { DB_URL, options } from "../configs/db";
 import mongoose from "mongoose";
-import PostModel from "./models/post.model";
-import UserModel from "./models/user.model";
 
 import UserRepo from "./user-repo";
+import BlogRepo from "./blog-repo";
 
-export { PostModel, UserModel, UserRepo };
+export { UserRepo, BlogRepo };
 
 export default databaseAdapters(mongoose, DB_URL, options);

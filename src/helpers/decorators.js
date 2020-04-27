@@ -16,9 +16,11 @@ function adaptPublicRequest(controller) {
 // Decoration of public adapter object
 function adaptProtectedRequest(controller) {
   return function (req, res, next) {
+    // console.log(req);
     protectionProxy(req)
       .then(() => {
-        // Decorate public adapter function and reuse it
+        // res.send("hello world");
+        //     // Decorate public adapter function and reuse it
         adaptPublicRequest(controller)(req, res, next);
       })
       .catch((err) => {

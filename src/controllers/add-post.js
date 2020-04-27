@@ -1,13 +1,14 @@
 import { deleteImageIfError } from "../functions/fs";
 export default function ControllerFactory(useCase) {
-  return function Controller({ body, file, params }) {
+  return function Controller({ body, file = {}, params }) {
     return new Promise((resolve, reject) => {
       try {
+        const newBody = { ...body };
         const createdBy = params.userId;
-        useCase({ ...body, postImage: file.filename, createdBy })
+        useCase({ ...newBody, postImage: file.filename, createdBy })
           .then(resolve)
           .catch((err) => {
-            deleteImageIfError(file.filename);
+            file.filename ? deleteImageIfError(file.filename) : null;
             reject(err);
           });
       } catch (err) {

@@ -8,4 +8,4 @@ import { appendValidationError } from "../functions/entity.helpers";
 
 export const userEntity = userEntityFactory(validation, hash, entityObject, null);
 export const loginEntity = loginEntityFactory(validation, hash, appendValidationError);
-export const postEntity = postEntiityFactory(validation, hash, entityObject);
+export const postEntity = postEntiityFactory(validation, hash, appendValidationError);

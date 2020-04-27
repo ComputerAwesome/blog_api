@@ -1,8 +1,8 @@
-export default function UseCaseFactory(model, { findOne }) {
+export default function UseCaseFactory({ findOne }) {
   return function UseCase({ postHash }) {
     return new Promise(async (resolve, reject) => {
       try {
-        const dbProcess = await findOne(model, { postHash });
+        const dbProcess = await findOne({ postHash });
 
         if (dbProcess.hasDatabaseError) reject(dbProcess);
 
@@ -15,7 +15,7 @@ export default function UseCaseFactory(model, { findOne }) {
         resolve({
           status: 200,
           msg: "fetch post",
-          data: dbProcess.data._doc
+          data: dbProcess.data._doc,
         });
       } catch (err) {
         reject(err.msg ? { msg: err.msg, status: 500 } : { msg: "server error", status: 500 });
