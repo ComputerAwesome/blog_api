@@ -1,34 +1,18 @@
-import express, { urlencoded, json } from "express";
+import express from "express";
 import cors from "cors";
 import { PORT } from "./configs/env";
-import { createServerListener, logger } from "./utils";
-import { catch404Requests, handelHttpErrors } from "./errors";
-import path from "path";
-import routes from "./routes";
-// invoke express application
+import { createServerListener } from "./utils";
+import app from "./app";
 
+// creating express instance
 const server = express();
-// handle cross origin requests
+// configuring cross origin
 server.use(cors());
-
-// // accept json data
-server.use(json());
-server.use(urlencoded({ extended: false }));
-
-// // logger
-logger(server);
-
-// static file path
-server.use("/api/images/", express.static(path.join(__dirname, "./static")));
-
-// serverend all microServices
-server.use(routes);
-
-// catch 404 errors
-catch404Requests(server);
-
-// handle http errors
-handelHttpErrors(server);
-
-// create server listener
+// allow json data
+server.use(express.json());
+// using x.www form urlencoded
+server.use(express.urlencoded({ extended: false }));
+// running express application
+app(server);
+// create app listener
 server.listen(PORT, createServerListener(PORT));
