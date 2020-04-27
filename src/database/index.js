@@ -1,4 +1,3 @@
-import databaseAdapters from "./database-adapters";
 import { DB_URL, options } from "../configs/db";
 import mongoose from "mongoose";
 
@@ -7,4 +6,4 @@ import BlogRepo from "./blog-repo";
 
 export { UserRepo, BlogRepo };
 
-export default databaseAdapters(mongoose, DB_URL, options);
+mongoose.connect(DB_URL, options).then(() => console.log("database connected"));
