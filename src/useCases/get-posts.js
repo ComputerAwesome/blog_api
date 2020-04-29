@@ -1,4 +1,4 @@
-export default function UseCaseFactory({ findMany }) {
+export default function UseCaseFactory({findMany}) {
   return function UseCase() {
     return new Promise(async (resolve, reject) => {
       try {
@@ -7,7 +7,7 @@ export default function UseCaseFactory({ findMany }) {
 
         if (dbProcess.hasDatabaseError) reject(dbProcess);
 
-        const data = dbProcess.data.map(function (post) {
+        const data = dbProcess.data.map(function(post) {
           delete post.createdBy._doc.password;
           delete post.createdBy._doc._id;
           delete post.createdBy._doc.__v;
@@ -18,11 +18,11 @@ export default function UseCaseFactory({ findMany }) {
 
         resolve({
           status: 200,
-          msg: "fetch all posts",
+          msg: 'fetch all posts',
           data,
         });
       } catch (err) {
-        reject(err.msg ? { msg: err.msg, status: 500 } : { msg: "server error", status: 500 });
+        reject(err.msg ? {msg: err.msg, status: 500} : {msg: 'server error', status: 500});
       }
     });
   };

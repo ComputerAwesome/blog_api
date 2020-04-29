@@ -1,4 +1,4 @@
-export default function (req, res, next) {
+export default function(req, res, next) {
   return {
     req: {
       body: req.body,
@@ -10,20 +10,20 @@ export default function (req, res, next) {
       file: req.file,
     },
     res: {
-      send: function (msg) {
+      send: function(msg) {
         res.send(msg);
         return this;
       },
-      json: function (data) {
+      json: function(data) {
         res.json(data);
         return this;
       },
-      status: function (st) {
+      status: function(st) {
         res.status(st);
         return this;
       },
     },
-    next: function (err) {
+    next: function(err) {
       next(err);
       return this;
     },

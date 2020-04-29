@@ -10,18 +10,18 @@ export default function EntityFactory(validation, hash, appendValidationError) {
   }) {
     return new Promise((resolve, reject) => {
       try {
-        const { pushError, getAllErrors } = appendValidationError();
-        if (!postTitle || validation.isEmpty(postTitle)) pushError("post title is required!");
+        const {pushError, getAllErrors} = appendValidationError();
+        if (!postTitle || validation.isEmpty(postTitle)) pushError('post title is required!');
 
-        if (!postImage || validation.isEmpty(postImage)) pushError("post image is required!");
+        if (!postImage || validation.isEmpty(postImage)) pushError('post image is required!');
 
-        if (!post || validation.isEmpty(post)) pushError("post is required!");
+        if (!post || validation.isEmpty(post)) pushError('post is required!');
 
-        if (!createdBy || validation.isEmpty(createdBy)) pushError("user id is required!");
+        if (!createdBy || validation.isEmpty(createdBy)) pushError('user id is required!');
 
-        let errors = getAllErrors();
+        const errors = getAllErrors();
 
-        if (errors.validationError) reject({ validationError: true, errors: errors.entityErrors });
+        if (errors.validationError) reject({validationError: true, errors: errors.entityErrors});
 
         const data = Object.freeze({
           createdBy,
@@ -34,7 +34,7 @@ export default function EntityFactory(validation, hash, appendValidationError) {
           postHash: hash(postTitle),
         });
 
-        resolve({ data, status: 201, validationError: false });
+        resolve({data, status: 201, validationError: false});
       } catch (err) {
         reject(err);
       }

@@ -1,6 +1,6 @@
-import { postEntity } from "../entities";
+import {postEntity} from '../entities';
 
-export default function UseCaseFactory({ insert }) {
+export default function UseCaseFactory({insert}) {
   return function UseCase(data) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -19,16 +19,16 @@ export default function UseCaseFactory({ insert }) {
 
         resolve({
           status: 201,
-          msg: "post created",
+          msg: 'post created',
           data: dbProcess.data._doc,
         });
       } catch (err) {
         delete err.validationError;
 
         reject(
-          err.errors
-            ? { errors: err.errors, status: 500 }
-            : { msg: "internal server error", status: 500 }
+          err.errors ?
+            {errors: err.errors, status: 500} :
+            {msg: 'internal server error', status: 500},
         );
       }
     });

@@ -1,32 +1,32 @@
-import { Schema, model } from "mongoose";
-import autoPopulate from "mongoose-autopopulate";
+import {Schema, model} from 'mongoose';
+import autoPopulate from 'mongoose-autopopulate';
 
 const userSchema = new Schema({
   username: {
     type: String,
     trim: true,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     unique: true,
     trim: true,
-    required: true
+    required: true,
   },
   phone: {
     type: Number,
-    required: true
+    required: true,
   },
   password: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   profilePic: {
     type: String,
     trim: true,
-    required: false
-  }
+    required: false,
+  },
 }).plugin(autoPopulate);
 
-export default model("user", userSchema);
+export default model('user', userSchema);

@@ -1,6 +1,6 @@
-import { userEntity } from "../entities";
+import {userEntity} from '../entities';
 
-export default function UseCaseFactory({ insert, findOne }) {
+export default function UseCaseFactory({insert, findOne}) {
   return function UseCase(data) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -8,12 +8,13 @@ export default function UseCaseFactory({ insert, findOne }) {
 
         if (entityData.validationError) return reject(entityData);
 
-        const exists = await findOne({ email: entityData.data.email });
+        const exists = await findOne({email: entityData.data.email});
 
-        if (exists.hasDatabaseError)
-          return reject({ msg: "error adding user, please try again later!" });
+        if (exists.hasDatabaseError) {
+          return reject({msg: 'error adding user, please try again later!'});
+        }
 
-        if (exists.data) return resolve({ msg: "user already exists!", status: 200 });
+        if (exists.data) return resolve({msg: 'user already exists!', status: 200});
 
         const dbProcess = await insert(entityData.data);
 
@@ -25,16 +26,16 @@ export default function UseCaseFactory({ insert, findOne }) {
 
         resolve({
           status: 201,
-          msg: "signed up successfully!",
+          msg: 'signed up successfully!',
           data: dbProcess.data._doc,
         });
       } catch (err) {
         delete err.validationError;
 
         reject(
-          err.errors
-            ? { errors: err.errors, status: 500 }
-            : { msg: "internal server error", status: 500 }
+          err.errors ?
+            {errors: err.errors, status: 500} :
+            {msg: 'internal server error', status: 500},
         );
       }
     });

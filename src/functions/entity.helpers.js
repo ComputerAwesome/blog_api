@@ -1,11 +1,11 @@
 export function appendValidationError() {
-  let entityErrors = [];
+  const entityErrors = [];
   return {
     pushError: (err) => {
       entityErrors.push(err);
     },
     getAllErrors: () => {
-      return { entityErrors, validationError: entityErrors[0] ? true : false };
+      return {entityErrors, validationError: !!entityErrors[0]};
     },
   };
 }

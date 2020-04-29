@@ -1,6 +1,6 @@
-import { catchNotFoundErrors, handelHttpErrors } from "./express-errors";
+import {catchNotFoundErrors, handelHttpErrors} from './express-errors';
 
-export default function (app) {
+export default function(app) {
   app.use(catchNotFoundErrors);
   app.use(handelHttpErrors);
 }
